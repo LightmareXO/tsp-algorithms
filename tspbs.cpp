@@ -82,16 +82,17 @@ int main() {
 
             // 各状態について
             for (int j = 0; j < NumState[i-1]; ++j) {
+                const State &cur = Beam[i-1][j];
                 // 次に行く都市を探索
-                for (int k = 0; k < CITIES; ++k) {
-                    State nowState = Beam[i-1][j];
+                for (auto [d, k] : near[cur.now]) {
                     // 訪問済みならスキップ
-                    if (nowState.visited.test(k)) continue;
+                    if (cur.visited.test(k)) continue;
                     
+                    State nowState = cur; 
                     nowState.now = k;
                     nowState.LastPos = j;
                     nowState.visited.set(k);
-                    nowState.score += dist(p[Beam[i-1][j].now], p[k]);
+                    nowState.score += d;
 
                     candidate.emplace_back(nowState);
                 }
