@@ -170,6 +170,8 @@ int main() {
         }
     }
 
+    cout << nameLine << endl;
+    cout << "W = " << WIDTH << endl;
     cout << bestScore << endl;
     showPath(bestSchedule);
     cout << endl;

@@ -33,7 +33,7 @@ run_one() {
     python ../src/plot.py "$result" -o "$tour"
 
     local score
-    score="$(head -n 1 "$result")"
+    score="$(sed -n '3p' "$result")"
     echo "$name: score=$score, image=$tour"
 }
 
