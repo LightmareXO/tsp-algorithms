@@ -7,6 +7,7 @@
 #include <vector>
 #include <bitset>
 #include <algorithm>
+#include <string>
 
 using namespace std;
 using ll = long long;
@@ -44,7 +45,16 @@ void showNearer(vector<vector<pair<ll, int>>> p) {
 int main() {
     vector<Point> p;
 
-    int id, x, y;
+    string nameLine;
+    getline(cin, nameLine);
+
+    string line;
+    while (getline(cin, line)) {
+        if (line.find("NODE_COORD_SECTION") != string::npos) break;
+    }
+
+    int id;
+    ll x, y;
 
     while (cin >> id >> x >> y) {
         p.push_back({x, y});
