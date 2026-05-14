@@ -82,7 +82,7 @@ int main() {
 
     // showNearer(near);
 
-    const int WIDTH = 10;
+    const int WIDTH = 200;
     vector<int> NumState(CITIES+1);
     vector<vector<State>> Beam(CITIES, vector<State>(WIDTH));
 
