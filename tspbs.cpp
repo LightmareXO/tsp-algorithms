@@ -7,10 +7,10 @@ struct Point {
 };
 
 struct State {
-    Point p;
-    ll score;
-    int LastMove;
-    int LastPos;
+    Point p; // 現在位置
+    ll score; // 暫定スコア
+    int LastMove; // 最後に移動した都市
+    int LastPos; // Beam[i-1][どこ]から遷移したか
 };
 
 bool operator>(const State &a, const State &b) {
@@ -51,33 +51,38 @@ int main() {
             if (i == j) continue;
 
             tmp.push_back({dist(p[i], p[j]), j});
-            sort(tmp.begin(), tmp.end());
         }
+        sort(tmp.begin(), tmp.end());
 
         near[i] = tmp;
     }
 
-    showNearer(near);
+    // showNearer(near);
 
     const int WIDTH = 10;
     int NumState[size];
     State Beam[size][WIDTH];
     Point schedule[size];
+
     auto beamSearch = [&](Point start) -> void {
         NumState[0] = 1;
         Beam[0][0].score = 0;
         Beam[0][0].p = start;
 
-        for (int i = 0; i < size; i++) {
-            vector<State> canditate;
+        for (int i = 1; i <= size; ++i) {
+            vector<State> candidate;
 
-            //ToDo
+            // 
+            for (int j = 0; j < NumState[i-1]; ++j) {
+                
+            }
 
-            sort(canditate.begin(), canditate.end());
-            NumState[i] = min(WIDTH, (int)canditate.size());
+
+            sort(candidate.begin(), candidate.end());
+            NumState[i] = min(WIDTH, (int)candidate.size());
 
             for(int j = 0; j < NumState[i]; j++) {
-                Beam[i][j] = canditate[j];
+                Beam[i][j] = candidate[j];
             }
         }
     };
