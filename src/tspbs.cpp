@@ -84,7 +84,7 @@ int main() {
     // for debug
     // showNearer(near);
 
-    const int WIDTH = 200; // ビーム幅
+    const int WIDTH = 3000; // ビーム幅
     vector<int> NumState(CITIES+1);
     vector<vector<State>> Beam(CITIES, vector<State>(WIDTH));
 
@@ -118,8 +118,11 @@ int main() {
             }
 
             // 候補のtop WIDTH個をとってくる
-            sort(candidate.begin(), candidate.end());
             NumState[i] = min(WIDTH, (int)candidate.size());
+            if ((int)candidate.size() > WIDTH) {
+                nth_element(candidate.begin(), candidate.begin() + WIDTH, candidate.end());
+            }
+            sort(candidate.begin(), candidate.begin() + NumState[i]);
             for(int j = 0; j < NumState[i]; j++) {
                 Beam[i][j] = candidate[j];
             }
