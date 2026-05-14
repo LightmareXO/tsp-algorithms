@@ -1,0 +1,6 @@
+/result/
+/build/
+/buildscript/build/
+
+/testcases/*
+!/testcases/.gitkeep
