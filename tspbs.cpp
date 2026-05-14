@@ -2,7 +2,12 @@
 // 距離関数は二点間の距離を四捨五入して使用しているので、
 // 用途に応じてscoreとdist()をdoubleにするかしてください
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <cmath>
+#include <vector>
+#include <bitset>
+#include <algorithm>
+
 using namespace std;
 using ll = long long;
 
@@ -87,7 +92,7 @@ int main() {
                 for (auto [d, k] : near[cur.now]) {
                     // 訪問済みならスキップ
                     if (cur.visited.test(k)) continue;
-                    
+
                     State nowState = cur; 
                     nowState.now = k;
                     nowState.LastPos = j;
