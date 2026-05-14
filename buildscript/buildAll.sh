@@ -5,3 +5,4 @@ cd "$(dirname "$0")"
 
 mkdir -p build
 g++ ../src/tspbs.cpp -o build/tspbs -O3 -std=c++17
+g++ ../src/tspbs2.cpp -o build/tspbs2 -O3 -std=c++17

@@ -2,6 +2,8 @@
 // 距離関数は二点間の距離を四捨五入して使用しているので、
 // 　用途に応じてscoreとdist()をdoubleにするかしてください
 
+// tspbsとの違い: (その時までのパス長 + ペナルティ)で評価
+
 #include <iostream>
 #include <cmath>
 #include <vector>
@@ -21,14 +23,16 @@ struct Point {
 };
 
 struct State {
-    ll score; // 暫定スコア
+    ll score; // パス長
+    double evalScore; // 評価に使うスコア
     int now; // 今回訪問した都市
     int LastPos; // Beam[i-1][どこ]から遷移したか
     bitset<MAX_N> visited; // 訪問済み都市の集合(今回含む)
 };
 
 bool operator<(const State &a, const State &b) {
-    return a.score < b.score;
+    if (a.evalScore == b.evalScore) return a.score < b.score;
+    return a.evalScore < b.evalScore;
 }
 
 ll dist(Point a, Point b) {
@@ -91,6 +95,7 @@ int main() {
     auto beamSearch = [&](int start) -> void {
         NumState[0] = 1;
         Beam[0][0].score = 0;
+        Beam[0][0].evalScore = 0;
         Beam[0][0].now = start;
         Beam[0][0].visited.reset();
         Beam[0][0].visited.set(start);
@@ -112,6 +117,11 @@ int main() {
                     nowState.LastPos = j;
                     nowState.visited.set(k);
                     nowState.score += d;
+                    
+                    long double alpha = (double)i / (CITIES-1); // 探索時のペナルティ関数
+                    alpha *= alpha * alpha * alpha;
+                    double weight = 1; // ペナルティの強さの係数
+                    nowState.evalScore = nowState.score + weight  * alpha * dist(p[nowState.now], p[start]);
 
                     candidate.emplace_back(nowState);
                 }
