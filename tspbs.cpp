@@ -1,6 +1,6 @@
 // 注意点: 
 // 距離関数は二点間の距離を四捨五入して使用しているので、
-// 用途に応じてscoreとdist()をdoubleにするかしてください
+// 　用途に応じてscoreとdist()をdoubleにするかしてください
 
 #include <iostream>
 #include <cmath>
@@ -8,6 +8,7 @@
 #include <bitset>
 #include <algorithm>
 #include <string>
+#include <climits>
 
 using namespace std;
 using ll = long long;
@@ -15,6 +16,7 @@ using ll = long long;
 const int MAX_N = 200;
 
 struct Point {
+    int id;
     ll x, y;
 };
 
@@ -57,7 +59,7 @@ int main() {
     ll x, y;
 
     while (cin >> id >> x >> y) {
-        p.push_back({x, y});
+        p.push_back({id, x, y});
     }
 
     int CITIES = p.size();
@@ -134,6 +136,12 @@ int main() {
         return path;
     };
 
+    auto showPath = [&](vector<int> path) -> void {
+        for (auto i : path) {
+            cout << p[i].id << " " << p[i].x << " " << p[i].y << endl;
+        }
+    };
+
     ll bestScore = LLONG_MAX;
     vector<int> bestSchedule;
     // 各頂点スタートを試す
@@ -148,4 +156,6 @@ int main() {
     }
 
     cout << bestScore << endl;
+    showPath(bestSchedule);
+    cout << endl;
 }
