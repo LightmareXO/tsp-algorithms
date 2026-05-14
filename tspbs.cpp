@@ -124,9 +124,9 @@ int main() {
         }
     };
 
-    auto restorePath = [&]() -> vector<int> {
+    auto restorePath = [&](int curr) -> vector<int> {
         vector<int> path(CITIES);
-        int curr = 0;
+        
         for (int i = CITIES-1; i >= 0; --i) {
             path[i] = Beam[i][curr].now;
             if (i > 0) {
@@ -148,10 +148,13 @@ int main() {
     for (int start = 0; start < CITIES; ++start) {
         fill(NumState.begin(), NumState.end(), 0);
         beamSearch(start);
-        ll totalScore = Beam[CITIES-1][0].score + dist(p[Beam[CITIES-1][0].now], p[start]);
-        if (bestScore > totalScore) {
-            bestScore = totalScore;
-            bestSchedule = restorePath();
+        for (int j = 0; j < NumState[CITIES-1]; ++j) {
+            ll totalScore = Beam[CITIES-1][j].score + dist(p[Beam[CITIES-1][j].now], p[start]);
+
+            if (bestScore > totalScore) {
+                bestScore = totalScore;
+                bestSchedule = restorePath(j);
+            }
         }
     }
 
